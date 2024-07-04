@@ -7,6 +7,9 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# 自动生成的 dts 文件
+src/components.d.ts
+
 node_modules
 .DS_Store
 dist
