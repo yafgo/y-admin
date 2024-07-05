@@ -61,7 +61,7 @@ export default defineConfig({
         // 各页面js
         chunkFileNames: 'static/js/[name]-[hash].js',
         // 其他静态资源
-        assetFileNames: 'static/[ext]/[name]-[hash].[ext]'
+        assetFileNames: 'static/[ext]/[name]-[hash][extname]'
       }
     }
   },
