@@ -38,7 +38,12 @@ export default defineConfig({
     assetsInlineLimit: 4096, // 静态超过多少kb时, 生成单独文件
     chunkSizeWarningLimit: 2000, // 单个chunk超过多少kb时, 发出警告
     sourcemap: false, // 是否生成 sourcemap 文件
-    minify: 'esbuild', // 混淆器, 'terser' | 'esbuild', 默认 'esbuild', 设为 'terser' 下面的 terserOptions 才能生效
+    /**
+     * 混淆模式, 'esbuild' | 'terser' , 默认 'esbuild'
+     * 设为 'esbuild' 使用和 `build` 同级的 `esbuild` 配置
+     * 设为 'terser' 使用下面的 terserOptions 配置, 同时需要安装 terser 依赖
+     */
+    minify: 'esbuild',
     /* terserOptions: {
       compress: {
         drop_console: true, // 去除console
@@ -51,8 +56,11 @@ export default defineConfig({
     }, */
     rollupOptions: {
       output: {
+        // 入口文件
         entryFileNames: 'static/js/[name]-[hash].js',
+        // 各页面js
         chunkFileNames: 'static/js/[name]-[hash].js',
+        // 其他静态资源
         assetFileNames: 'static/[ext]/[name]-[hash].[ext]'
       }
     }
