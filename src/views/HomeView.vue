@@ -3,7 +3,9 @@
 </script>
 
 <template>
-  <main>
+  <main class="y-page">
+    <TheWelcome />
+    <TheWelcome />
     <TheWelcome />
   </main>
 </template>

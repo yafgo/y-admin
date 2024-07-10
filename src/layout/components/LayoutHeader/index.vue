@@ -1,23 +1,28 @@
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <a-layout-header class="layout-header">
+    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="36" height="36" />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
       </nav>
     </div>
-  </header>
+  </a-layout-header>
 </template>
 
 <script setup lang="ts">
 defineOptions({ name: 'LayoutHeader' })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.layout-header {
+  display: flex;
+  height: 56px;
+  background: var(--color-bg-1);
+  border-bottom: 1px solid var(--color-neutral-3);
+}
+
 header {
   line-height: 1.5;
   max-height: 100vh;
@@ -29,6 +34,7 @@ header {
 }
 
 nav {
+  display: flex;
   width: 100%;
   font-size: 12px;
   text-align: center;
