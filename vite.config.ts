@@ -20,7 +20,7 @@ export default defineConfig({
     }),
     Components({
       // 指定组件位置，默认是 src/components 自动导入自定义组件
-      dirs: ['src/components'],
+      dirs: ['src/components', 'src/layout/components/PageContainer'],
       extensions: ['vue', 'tsx'],
       // 配置文件生成位置
       dts: 'src/components.d.ts'

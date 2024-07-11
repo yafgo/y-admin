@@ -27,7 +27,10 @@ const routes = [
       {
         path: '',
         name: 'about',
-        component: () => import('../views/AboutView.vue')
+        component: () => import('../views/AboutView.vue'),
+        meta: {
+          footer: true
+        }
       }
     ]
   }
@@ -35,7 +38,13 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: routes
+  routes: routes,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  scrollBehavior(to, from, savedPosition) {
+    // 内容区始终滚动到顶部
+    document.querySelector('#layout-content')?.scrollTo(0, 0)
+    return { top: 0 }
+  }
 })
 
 export default router

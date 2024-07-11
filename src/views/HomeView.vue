@@ -3,9 +3,7 @@
 </script>
 
 <template>
-  <main class="y-page">
-    <TheWelcome />
-    <TheWelcome />
-    <TheWelcome />
-  </main>
+  <PageContainer>
+    <TheWelcome v-for="i in 5" :key="i" />
+  </PageContainer>
 </template>

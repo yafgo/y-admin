@@ -1,9 +1,13 @@
 <template>
-  <a-layout class="layout-content">
-    <router-view></router-view>
-
-    <p class="layout-footer">底部</p>
+  <a-layout class="layout-content" id="layout-content">
+    <router-view v-slot="{ Component }">
+      <component :is="Component"></component>
+    </router-view>
   </a-layout>
+
+  <a-back-top target-container="#layout-content" :style="{ position: 'absolute' }">
+    <!-- 可自定义slot -->
+  </a-back-top>
 </template>
 
 <script setup lang="ts">
@@ -17,11 +21,5 @@ defineOptions({ name: 'LayoutContent' })
   overflow-y: auto;
   position: relative;
   display: flex;
-}
-
-.layout-footer {
-  height: 36px;
-  line-height: 36px;
-  text-align: center;
 }
 </style>
