@@ -14,6 +14,6 @@ defineOptions({ name: 'LayoutFooter' })
   width: 100%;
   padding: 16px 32px;
   text-align: center;
-  background-color: var(--color-fill-1);
+  background-color: var(--color-fill-2);
 }
 </style>
