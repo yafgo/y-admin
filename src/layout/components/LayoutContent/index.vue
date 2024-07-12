@@ -1,7 +1,9 @@
 <template>
   <a-layout class="layout-content" id="layout-content">
     <router-view v-slot="{ Component }">
-      <component :is="Component"></component>
+      <transition>
+        <component :is="Component"></component>
+      </transition>
     </router-view>
   </a-layout>
 
