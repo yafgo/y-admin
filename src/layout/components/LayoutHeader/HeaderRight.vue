@@ -1,6 +1,6 @@
 <template>
   <a-row class="header-right">
-    <a-space size="medium">
+    <a-space size="large">
       <!-- 搜索 -->
       <a-tooltip content="搜索">
         <a-button size="mini" class="nav-btn">
@@ -30,14 +30,15 @@
         </a-button>
       </a-tooltip>
 
-      <span class="menu-item">菜单1</span>
-      <span class="menu-item">菜单2</span>
+      <!-- 用户菜单 -->
+      <HeaderRightUser></HeaderRightUser>
     </a-space>
   </a-row>
 </template>
 
 <script setup lang="ts">
 import { useDark, useToggle, useFullscreen } from '@vueuse/core'
+import HeaderRightUser from './HeaderRightUser.vue'
 
 defineOptions({ name: 'HeaderRight' })
 
@@ -50,7 +51,8 @@ const isDark = useDark({
   valueLight: 'light',
   storageKey: 'arco-theme'
 })
-const handleToggleTheme = () => useToggle(isDark)
+const toggleTheme = useToggle(isDark)
+const handleToggleTheme = () => toggleTheme()
 
 // 全屏
 const { isFullscreen, toggle: toggleFullScreen } = useFullscreen()
