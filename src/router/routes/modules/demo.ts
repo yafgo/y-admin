@@ -4,13 +4,15 @@ import type { AppRouteRecordRaw } from '../types'
 const DEMO: AppRouteRecordRaw[] = [
   {
     path: '/demo',
-    name: 'demoGroup',
+    name: 'demo',
     component: LayoutDefault,
+    // redirect: '/demo/index',
+    meta: { order: 1 },
     children: [
       {
         path: '',
-        name: 'demo',
-        component: () => import('@/views/AboutView.vue'),
+        name: 'demoIndex',
+        component: () => import('@/views/HomeView.vue'),
       },
     ],
   },
@@ -18,6 +20,7 @@ const DEMO: AppRouteRecordRaw[] = [
     path: '/about',
     name: 'aboutGroup',
     component: LayoutDefault,
+    meta: { order: 2 },
     children: [
       {
         path: '',

@@ -7,10 +7,13 @@
     :collapsed-width="54"
   >
     <div class="logo">Logo</div>
+    <MenuList></MenuList>
   </a-layout-sider>
 </template>
 
 <script setup lang="ts">
+import MenuList from '../MenuList/index.vue'
+
 defineOptions({ name: 'LayoutSider' })
 </script>
 
