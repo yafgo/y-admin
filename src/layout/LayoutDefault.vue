@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import LayoutHeader from './components/LayoutHeader/index.vue'
-import LayoutSider from './components/LayoutSider.vue'
+import LayoutSider from './components/LayoutSider/index.vue'
 import LayoutContent from './components/LayoutContent/index.vue'
 
 defineOptions({ name: 'AppLayout' })

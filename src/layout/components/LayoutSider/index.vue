@@ -10,7 +10,9 @@
   </a-layout-sider>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineOptions({ name: 'LayoutSider' })
+</script>
 
 <style lang="scss" scoped>
 .layout-sider {
