@@ -11,20 +11,21 @@
       </a-tooltip>
 
       <!-- 全屏 -->
-      <a-tooltip content="切换全屏">
-        <a-button size="mini" class="nav-btn" @click="handleToggleFullscreen">
+      <a-tooltip :content="isFullscreen ? '退出全屏' : '进入全屏'">
+        <a-button size="mini" class="nav-btn" @click="toggleFullScreen">
           <template #icon>
-            <icon-fullscreen :size="18" />
+            <icon-fullscreen :size="18" v-if="!isFullscreen" />
+            <icon-fullscreen-exit :size="18" v-else />
           </template>
         </a-button>
       </a-tooltip>
 
       <!-- 深色模式 -->
-      <a-tooltip :content="'切换为' + (theme === 'dark' ? '浅色模式' : '深色模式')">
+      <a-tooltip :content="'切换为' + (isDark ? '浅色模式' : '深色模式')">
         <a-button size="mini" class="nav-btn" @click="handleToggleTheme">
           <template #icon>
-            <icon-moon-fill :size="18" v-if="theme === 'dark'" />
-            <icon-sun-fill :size="18" v-else />
+            <icon-sun-fill :size="18" v-if="isDark" />
+            <icon-moon-fill :size="18" v-else />
           </template>
         </a-button>
       </a-tooltip>
@@ -36,18 +37,23 @@
 </template>
 
 <script setup lang="ts">
+import { useDark, useToggle, useFullscreen } from '@vueuse/core'
+
 defineOptions({ name: 'HeaderRight' })
 
-const theme = ref('light')
+// 主题
+const isDark = useDark({
+  selector: 'body',
+  attribute: 'arco-theme',
+  initialValue: 'light',
+  valueDark: 'dark',
+  valueLight: 'light',
+  storageKey: 'arco-theme'
+})
+const handleToggleTheme = () => useToggle(isDark)
 
-const handleToggleTheme = () => {
-  theme.value = theme.value === 'light' ? 'dark' : 'light'
-}
-
-const handleToggleFullscreen = () => {
-  // todo 待实现
-  console.log('切换全屏')
-}
+// 全屏
+const { isFullscreen, toggle: toggleFullScreen } = useFullscreen()
 </script>
 
 <style lang="scss" scoped>
