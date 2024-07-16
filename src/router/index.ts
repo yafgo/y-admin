@@ -1,39 +1,26 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import AppLayout from '@/layout/index.vue'
-import HomeView from '../views/HomeView.vue'
+
+import { appRoutes } from './routes'
+import { LayoutDefault, ROUTE_NOT_FOUND } from './routes/base'
 
 const routes = [
   {
     path: '/',
     name: 'root',
-    component: AppLayout,
+    component: LayoutDefault,
     children: [
       {
         path: '',
         name: 'home',
-        component: HomeView
-      }
-    ]
+        // route level code-splitting
+        // this generates a separate chunk (Home.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import('@/views/HomeView.vue'),
+      },
+    ],
   },
-  {
-    path: '/about',
-    // name: 'about',
-    component: AppLayout,
-    // route level code-splitting
-    // this generates a separate chunk (About.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    // component: () => import('../views/AboutView.vue')
-    children: [
-      {
-        path: '',
-        name: 'about',
-        component: () => import('../views/AboutView.vue'),
-        meta: {
-          footer: true
-        }
-      }
-    ]
-  }
+  ...appRoutes,
+  ROUTE_NOT_FOUND,
 ]
 
 const router = createRouter({
@@ -44,7 +31,7 @@ const router = createRouter({
     // 内容区始终滚动到顶部
     document.querySelector('#layout-content')?.scrollTo(0, 0)
     return { top: 0 }
-  }
+  },
 })
 
 export default router
