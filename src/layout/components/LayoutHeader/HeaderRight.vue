@@ -49,7 +49,7 @@ const isDark = useDark({
   initialValue: 'light',
   valueDark: 'dark',
   valueLight: 'light',
-  storageKey: 'arco-theme'
+  storageKey: 'arco-theme',
 })
 const toggleTheme = useToggle(isDark)
 const handleToggleTheme = () => toggleTheme()

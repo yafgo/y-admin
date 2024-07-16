@@ -56,7 +56,7 @@ const handleLogout = () => {
           resolve(true)
         }, 1000)
       })
-    }
+    },
   })
   console.log(confirm)
 }
