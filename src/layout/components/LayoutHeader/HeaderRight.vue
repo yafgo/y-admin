@@ -38,7 +38,7 @@
 
 <script setup lang="ts">
 import { useDark, useToggle, useFullscreen } from '@vueuse/core'
-import HeaderRightUser from './HeaderRightUser.vue'
+import HeaderRightUser from './components/HeaderRightUser.vue'
 
 defineOptions({ name: 'HeaderRight' })
 

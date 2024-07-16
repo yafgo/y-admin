@@ -1,12 +1,18 @@
-<script setup lang="ts">
-// import { RouterLink, RouterView } from 'vue-router'
-// import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
   <a-config-provider>
     <RouterView></RouterView>
+    <template #loading>
+      <img src="/static/images/loading.gif" class="loading-icon" />
+    </template>
   </a-config-provider>
 </template>
 
-<style scoped></style>
+<script setup lang="ts">
+defineOptions({ name: 'App' })
+</script>
+
+<style lang="scss" scoped>
+.loading-icon {
+  width: 30px;
+}
+</style>

@@ -23,7 +23,7 @@
         </a-space>
       </a-doption>
       <a-doption>
-        <a-space class="menu-item-logout" @click="todo">
+        <a-space class="menu-item-logout" @click="handleLogout">
           <icon-export />
           <span> 退出登录 </span>
         </a-space>
@@ -33,11 +33,33 @@
 </template>
 
 <script setup lang="ts">
+import { Message, Modal } from '@arco-design/web-vue'
+
 defineOptions({ name: 'HeaderRightUser' })
 
 const avatar = ref('/src/assets/logo.svg')
 
-const todo = () => console.log('todo')
+const todo = () => {
+  Message.success('todo')
+}
+
+const handleLogout = () => {
+  const confirm = Modal.confirm({
+    title: '提示',
+    content: '确定要退出登录吗？',
+    onOk: () => {
+      Message.success('退出成功')
+    },
+    onBeforeOk: () => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(true)
+        }, 1000)
+      })
+    }
+  })
+  console.log(confirm)
+}
 </script>
 
 <style lang="scss" scoped>
