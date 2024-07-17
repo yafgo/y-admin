@@ -7,13 +7,7 @@ const useAppStore = defineStore('app', {
     ...defaultSettings,
   }),
 
-  getters: {
-    appState: (state: AppState): AppState => {
-      return {
-        ...state,
-      }
-    },
-  },
+  getters: {},
 
   actions: {
     updateSettings(partial: Partial<AppState>) {
