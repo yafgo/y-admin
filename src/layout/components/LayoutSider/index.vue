@@ -3,7 +3,7 @@
     class="layout-sider"
     collapsible
     breakpoint="xl"
-    :width="220"
+    :width="appStore.menuWidth"
     :collapsed-width="54"
   >
     <div class="logo">Logo</div>
@@ -12,9 +12,12 @@
 </template>
 
 <script setup lang="ts">
+import { useAppStore } from '@/stores'
 import MenuList from '../MenuList/index.vue'
 
 defineOptions({ name: 'LayoutSider' })
+
+const appStore = useAppStore()
 </script>
 
 <style lang="scss" scoped>
