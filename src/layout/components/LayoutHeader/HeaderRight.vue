@@ -24,8 +24,8 @@
       <a-tooltip :content="'切换为' + (isDark ? '浅色模式' : '深色模式')">
         <a-button size="mini" class="nav-btn" @click="handleToggleTheme">
           <template #icon>
-            <icon-sun-fill :size="18" v-if="isDark" />
-            <icon-moon-fill :size="18" v-else />
+            <icon-moon-fill :size="18" v-if="isDark" />
+            <icon-sun-fill :size="18" v-else />
           </template>
         </a-button>
       </a-tooltip>
