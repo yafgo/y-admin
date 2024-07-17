@@ -39,17 +39,24 @@
 <script setup lang="ts">
 import { useDark, useToggle, useFullscreen } from '@vueuse/core'
 import HeaderRightUser from './components/HeaderRightUser.vue'
+import { useAppStore } from '@/stores'
 
 defineOptions({ name: 'HeaderRight' })
+
+const appStore = useAppStore()
 
 // 主题
 const isDark = useDark({
   selector: 'body',
   attribute: 'arco-theme',
-  initialValue: 'light',
+  initialValue: appStore.theme === 'dark' ? 'dark' : 'light',
   valueDark: 'dark',
   valueLight: 'light',
   storageKey: 'arco-theme',
+  onChanged(isDark, defaultHandler, mode) {
+    defaultHandler(mode)
+    appStore.toggleTheme(isDark)
+  },
 })
 const toggleTheme = useToggle(isDark)
 const handleToggleTheme = () => toggleTheme()
