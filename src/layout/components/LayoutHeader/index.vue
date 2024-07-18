@@ -25,6 +25,7 @@ defineOptions({ name: 'LayoutHeader' })
   justify-content: space-between;
   background: var(--color-bg-2);
   border-bottom: 1px solid var(--color-border);
+  z-index: 100;
 
   .header-left {
     display: flex;

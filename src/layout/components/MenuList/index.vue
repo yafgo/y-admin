@@ -3,10 +3,12 @@ import { compile } from 'vue'
 import type { RouteLocationNormalized, RouteRecordRaw } from 'vue-router'
 import useMenuTree from './use-menu-tree'
 import { addRouteListener } from '@/utils/route-listener'
+import { useAppStore } from '@/stores'
 
 export default defineComponent({
   name: 'MenuList',
   setup() {
+    const appStore = useAppStore()
     const router = useRouter()
     const { menuTree } = useMenuTree()
 
@@ -98,14 +100,28 @@ export default defineComponent({
       return travel(menuTree.value)
     }
 
+    // 菜单折叠状态
+    const menuCollapsed = computed({
+      get: () => (appStore.device === 'desktop' ? appStore.menuCollapsed : false),
+      set: (val: boolean) => appStore.updateSettings({ menuCollapsed: val }),
+    })
+    const handleCollapse = (val: boolean) => {
+      /* if (appStore.device === 'desktop') {
+        appStore.updateSettings({ menuCollapsed: val })
+      } */
+    }
+
     return () => (
       <a-menu
         mode="vertical"
         auto-open={false}
         level-indent={16}
+        v-model:collapsed={menuCollapsed.value}
         v-model:open-keys={openKeys.value}
         v-model:selected-keys={selectedKeys.value}
-        onCollapse={(e: any) => console.log(e)}
+        onCollapse={handleCollapse}
+        show-collapse-button={true}
+        style="height: 100%; width: 100%;"
       >
         {renderMenu()}
       </a-menu>
