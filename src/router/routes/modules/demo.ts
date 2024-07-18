@@ -6,7 +6,7 @@ const DEMO: AppRouteRecordRaw[] = [
     path: '/demo',
     name: 'demo',
     component: LayoutDefault,
-    // redirect: '/demo/index',
+    redirect: '/demo/index',
     meta: {
       order: 1,
       locale: '示例',
@@ -14,7 +14,7 @@ const DEMO: AppRouteRecordRaw[] = [
     },
     children: [
       {
-        path: '',
+        path: 'index',
         name: 'demoIndex',
         component: () => import('@/views/HomeView.vue'),
         meta: {

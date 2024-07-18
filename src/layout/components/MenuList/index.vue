@@ -11,7 +11,8 @@ export default defineComponent({
 
     const goto = (el: RouteRecordRaw) => {
       router.push({
-        path: el.path,
+        name: el.name,
+        // path: el.path,
       })
     }
 
