@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import { appRoutes } from './routes'
 import { LayoutDefault, ROUTE_NOT_FOUND } from './routes/base'
+import setupRouteGuard from './guard'
 
 const routes = [
   {
@@ -33,5 +34,8 @@ const router = createRouter({
     return { top: 0 }
   },
 })
+
+// 设置路由守卫
+setupRouteGuard(router)
 
 export default router
