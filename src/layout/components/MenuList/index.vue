@@ -1,32 +1,72 @@
-<template>
-  <a-menu>
-    <template v-for="el in menuTree" :key="el.name">
-      <a-menu-item @click="goto(el)">{{ el.name }}</a-menu-item>
-    </template>
-    <a-menu-item key="2">Solution</a-menu-item>
-    <a-menu-item key="3">Cloud Service</a-menu-item>
-    <a-menu-item key="4">Cooperation</a-menu-item>
-  </a-menu>
-</template>
-
-<script setup lang="ts">
+<script lang="tsx">
+import { compile } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
 import useMenuTree from './use-menu-tree'
 
-defineOptions({ name: 'MenuList' })
+export default defineComponent({
+  name: 'MenuList',
+  setup() {
+    const router = useRouter()
+    const { menuTree } = useMenuTree()
 
-const router = useRouter()
-const { menuTree } = useMenuTree()
+    const goto = (el: RouteRecordRaw) => {
+      router.push({
+        path: el.path,
+      })
+    }
 
-// const mode = ref('vertical')
-console.log(menuTree.value)
+    // 渲染菜单项
+    const renderMenu = () => {
+      function travel(_routes: RouteRecordRaw[], nodes = []) {
+        if (!_routes || !_routes.length) {
+          return nodes
+        }
 
-const goto = (el: RouteRecordRaw) => {
-  // console.log(el)
-  router.push({
-    path: el.path,
-  })
-}
+        _routes.forEach((el) => {
+          const icon = el?.meta?.icon ? () => h(compile(`<${el?.meta?.icon} />`)) : null
+
+          const node =
+            el?.children && el?.children.length ? (
+              <a-sub-menu
+                key={el.name}
+                v-slots={{
+                  icon,
+                  title: () => el?.meta?.locale || '',
+                }}
+              >
+                {travel(el?.children)}
+              </a-sub-menu>
+            ) : (
+              <a-menu-item
+                key={el.name}
+                v-slots={{
+                  icon,
+                }}
+                onClick={() => goto(el)}
+              >
+                {el?.meta?.locale || '菜单'}
+              </a-menu-item>
+            )
+          nodes.push(node as never)
+        })
+
+        return nodes
+      }
+      return travel(menuTree.value)
+    }
+
+    return () => (
+      <a-menu
+        mode="vertical"
+        auto-open={false}
+        level-indent={16}
+        onCollapse={(e: any) => console.log(e)}
+      >
+        {renderMenu()}
+      </a-menu>
+    )
+  },
+})
 </script>
 
 <style lang="scss" scoped></style>
