@@ -5,7 +5,7 @@
   "menu": true,
   "topMenu": false,
   "hideMenu": false,
-  "menuCollapse": false,
+  "menuCollapsed": false,
   "footer": true,
   "themeColor": "#165DFF",
   "menuWidth": 220,

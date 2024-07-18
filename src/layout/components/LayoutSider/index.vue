@@ -1,9 +1,10 @@
 <template>
   <a-layout-sider
     class="layout-sider"
-    breakpoint="sm"
+    breakpoint="xl"
     :collapsible="true"
-    :collapsed="appStore.menuCollapsed"
+    :collapsed="collapsed"
+    @collapse="handleCollapse"
     :width="appStore.menuWidth"
     :hide-trigger="true"
   >
@@ -19,7 +20,19 @@ import MenuList from '../MenuList/index.vue'
 
 defineOptions({ name: 'LayoutSider' })
 
+/** 是否第一次执行 */
+const isInit = ref(true)
 const appStore = useAppStore()
+
+const collapsed = computed(() => appStore.menuCollapsed)
+const handleCollapse = (val: boolean) => {
+  if (isInit.value) return
+  appStore.updateSettings({ menuCollapsed: val })
+}
+
+onMounted(() => {
+  isInit.value = false
+})
 </script>
 
 <style lang="scss" scoped>
