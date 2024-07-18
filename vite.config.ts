@@ -16,20 +16,21 @@ export default defineConfig({
     AutoImport({
       // 自动导入vue相关函数，如: ref、reactive、toRef等
       imports: ['vue', 'vue-router'],
-      dts: 'src/auto-import.d.ts'
+      dts: 'src/auto-import.d.ts',
     }),
     Components({
       // 指定组件位置，默认是 src/components 自动导入自定义组件
       dirs: ['src/components', 'src/layout/components/PageContainer'],
       extensions: ['vue', 'tsx'],
       // 配置文件生成位置
-      dts: 'src/components.d.ts'
-    })
+      dts: 'src/components.d.ts',
+    }),
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      vue: 'vue/dist/vue.esm-bundler.js',
+    },
   },
   // 构建配置
   build: {
@@ -61,12 +62,12 @@ export default defineConfig({
         // 各页面js
         chunkFileNames: 'static/js/[name]-[hash].js',
         // 其他静态资源
-        assetFileNames: 'static/[ext]/[name]-[hash][extname]'
-      }
-    }
+        assetFileNames: 'static/[ext]/[name]-[hash][extname]',
+      },
+    },
   },
   esbuild: {
     drop: [/* 'console', */ 'debugger'], // 压缩时移除 console 和 debugger
-    pure: ['console.log', 'console.info'] // 压缩时移除特定的 console
-  }
+    pure: ['console.log', 'console.info'], // 压缩时移除特定的 console
+  },
 })
