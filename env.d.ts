@@ -11,4 +11,6 @@ declare module '*.vue' {
 interface ImportMetaEnv {
   /** 接口地址 */
   readonly VITE_API_BASE_URL: string
+  /** 是否启用mock */
+  readonly VITE_ENABLE_MOCK: boolean
 }

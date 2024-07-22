@@ -17,15 +17,15 @@ export default defineConfig({
      */
     minify: 'esbuild',
     /* terserOptions: {
-          compress: {
-            drop_console: true, // 去除console
-            drop_debugger: true, // 去除debugger
-            keep_infinity: true // 防止 Infinity 被压缩成 1/0, 这可能会导致 Chrome 上的性能问题
-          },
-          format: {
-            comments: false // 去除注释
-          }
-        }, */
+      compress: {
+        drop_console: true, // 去除console
+        drop_debugger: true, // 去除debugger
+        keep_infinity: true, // 防止 Infinity 被压缩成 1/0, 这可能会导致 Chrome 上的性能问题
+      },
+      format: {
+        comments: false, // 去除注释
+      },
+    }, */
     rollupOptions: {
       output: {
         // 入口文件
@@ -39,6 +39,6 @@ export default defineConfig({
   },
   esbuild: {
     drop: [/* 'console', */ 'debugger'], // 压缩时移除 console 和 debugger
-    pure: ['console.log', 'console.info'], // 压缩时移除特定的 console
+    pure: ['console.log' /* , 'console.info' */], // 压缩时移除特定的 console
   },
 })

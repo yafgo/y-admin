@@ -6,6 +6,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
+import { viteMockServe } from 'vite-plugin-mock'
 
 import viteConfigDev from './config/vite.config.dev'
 import viteConfigProd from './config/vite.config.prod'
@@ -33,6 +34,12 @@ export default defineConfig(({ mode, command }) => {
         extensions: ['vue', 'tsx'],
         // 配置文件生成位置
         dts: 'src/components.d.ts',
+      }),
+      viteMockServe({
+        mockPath: 'src/mock',
+        enable: env.VITE_ENABLE_MOCK,
+        logger: true, // 是否在控制台显示请求日志
+        watchFiles: true,
       }),
     ],
     resolve: {
