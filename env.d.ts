@@ -7,3 +7,8 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+
+interface ImportMetaEnv {
+  /** 接口地址 */
+  readonly VITE_API_BASE_URL: string
+}

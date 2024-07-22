@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useDefaultInterceptor } from './interceptors'
 
 const instance = axios.create({
-  baseURL: '/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL,
   timeout: 1000,
 })
 
