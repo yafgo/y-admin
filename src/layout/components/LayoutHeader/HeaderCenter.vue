@@ -1,7 +1,6 @@
 <template>
   <div class="header-center">
-    <RouterLink to="/">Home</RouterLink>
-    <RouterLink to="/about">About</RouterLink>
+    <!-- 顶部 -->
   </div>
 </template>
 

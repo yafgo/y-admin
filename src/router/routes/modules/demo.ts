@@ -47,4 +47,32 @@ const DEMO: AppRouteRecordRaw[] = [
   },
 ]
 
+for (let i = 0; i < 6; i++) {
+  const item = {
+    path: `/demo${i}`,
+    name: `demoGroup${i}`,
+    component: LayoutDefault,
+    redirect: `/demo${i}/index`,
+    meta: {
+      order: 3 + i,
+      locale: `示例${i + 1}`,
+      icon: 'icon-settings',
+    },
+    children: [],
+  }
+  for (let j = 0; j < 5; j++) {
+    item.children.push({
+      path: `index${j}`,
+      name: `demo${i}Index${j}`,
+      component: () => import('@/views/AboutView.vue'),
+      meta: {
+        locale: `示例项 ${i} - ${j + 1}`,
+        icon: 'icon-apps',
+      },
+    } as never)
+  }
+
+  DEMO.push(item)
+}
+
 export default DEMO
