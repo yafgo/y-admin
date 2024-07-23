@@ -2,11 +2,13 @@ import type { UnwrapRef } from 'vue'
 import type { AxiosResponse } from 'axios'
 import { useLoading } from './loading'
 
+export { useRequest } from 'vue-hooks-plus'
+
 // use to fetch list
 // Don't use async function. It doesn't work in async function.
 // Use the bind function to add parameters
 // example: useRequest(api.bind(null, {}))
-export function useRequest<T>(
+export function useRequestOld<T>(
   api: () => Promise<AxiosResponse<any>>,
   defaultValue = [] as unknown as T,
   isLoading = true

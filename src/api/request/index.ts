@@ -3,7 +3,7 @@ import { useDefaultInterceptor } from './interceptors'
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
-  timeout: 1000,
+  timeout: 30000,
 })
 
 useDefaultInterceptor(instance)
