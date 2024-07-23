@@ -12,11 +12,28 @@ import App from './App.vue'
 import router from './router'
 import store from './stores'
 
-const app = createApp(App)
+const enableMock = async () => {
+  if (import.meta.env.PROD && import.meta.env.VITE_ENABLE_MOCK) {
+    await new Promise((resolve) => {
+      import('./mock/index').then(({ setupProdMockServer }) => {
+        setupProdMockServer()
+        resolve(true)
+      })
+    })
+  }
+}
 
-app.use(store)
-app.use(router)
-app.use(ArcoVue)
-app.use(ArcoVueIcon)
+const bootstrap = async () => {
+  const app = createApp(App)
 
-app.mount('#app')
+  app.use(store)
+  app.use(router)
+  app.use(ArcoVue)
+  app.use(ArcoVueIcon)
+
+  await enableMock()
+
+  app.mount('#app')
+}
+
+bootstrap()
