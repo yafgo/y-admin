@@ -1,10 +1,10 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 
 import { appRoutes } from './routes'
 import { LayoutDefault, ROUTE_NOT_FOUND } from './routes/base'
 import setupRouteGuard from './guard'
 
-const routes = [
+const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'root',
@@ -19,6 +19,15 @@ const routes = [
         component: () => import('@/views/HomeView.vue'),
       },
     ],
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/login/index.vue'),
+    meta: {
+      hideInMenu: true,
+      requiresAuth: false,
+    },
   },
   ...appRoutes,
   ROUTE_NOT_FOUND,
