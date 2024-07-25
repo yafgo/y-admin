@@ -37,7 +37,7 @@ export default defineConfig(({ mode, command }) => {
       }),
       viteMockServe({
         mockPath: 'src/mock',
-        enable: env.VITE_ENABLE_MOCK,
+        enable: env.VITE_ENABLE_MOCK !== 'false',
         logger: true, // 是否在控制台显示请求日志
         watchFiles: true,
       }),
