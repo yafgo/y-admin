@@ -15,7 +15,7 @@ import store from './stores'
 const enableMock = async () => {
   if (import.meta.env.PROD && import.meta.env.VITE_ENABLE_MOCK) {
     await new Promise((resolve) => {
-      import('./mock/index').then(({ setupProdMockServer }) => {
+      import('./mock/prod').then(({ setupProdMockServer }) => {
         setupProdMockServer()
         resolve(true)
       })
