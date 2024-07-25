@@ -1,8 +1,9 @@
 import request from '../../request'
+import type { ResLogin } from './type'
 
 /** 用户登录 */
 export const login = (data: { username: string; password: string }) => {
-  return request.post('/user/login', data)
+  return request.post<ResLogin>('/user/login', data)
 }
 
 /** 退出登录 */

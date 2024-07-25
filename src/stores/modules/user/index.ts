@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
 import type { UserState } from './types'
-import { getToken } from '@/utils/auth'
+import { clearToken, getToken, setToken } from '@/utils/auth'
 import { login as apiLogin, logout as apiLogout } from '@/api'
+import { RespCode } from '@/consts'
 
 const useUserStore = defineStore('user', {
   state: (): UserState => ({
@@ -20,14 +21,22 @@ const useUserStore = defineStore('user', {
 
   actions: {
     async login(params: any) {
-      const res = await apiLogin(params)
-      console.log('登录', res)
-      // this.token = '123456789'
+      const { code, data } = await apiLogin(params)
+      if (code !== RespCode.SUCCESS || !data.token) {
+        return false
+      }
+      setToken(data.token)
+      this.token = data.token
+      return data
     },
     async logout() {
-      const res = await apiLogout()
-      console.log('登出', res)
+      const { code } = await apiLogout()
+      if (code !== RespCode.SUCCESS) {
+        return false
+      }
+      clearToken()
       this.token = ''
+      return true
     },
   },
 })

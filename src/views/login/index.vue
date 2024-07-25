@@ -16,6 +16,7 @@
             :style="{ width: '84%' }"
             :label-col-style="{ display: 'none' }"
             :wrapper-col-style="{ flex: 1 }"
+            @submit="handleLogin"
           >
             <h3 class="login-right__title">
               <img class="logo" src="@/assets/logo.svg" /><span>Y · Admin</span>
@@ -42,7 +43,7 @@
             </a-form-item>
             <a-form-item>
               <a-space direction="vertical" fill class="w-full">
-                <a-button type="primary" size="large" long :loading="loading" @click="handleLogin">
+                <a-button type="primary" size="large" long :loading="btnLoading" html-type="submit">
                   登录
                 </a-button>
                 <a-button type="text" size="large" long class="register-btn">注册账号</a-button>
@@ -61,8 +62,11 @@
 import { Message, type FormInstance } from '@arco-design/web-vue'
 import LoginBg from './components/LoginBg/index.vue'
 import { useLoading } from '@/hooks'
+import { useUserStore } from '@/stores'
 
 defineOptions({ name: 'PageLogin' })
+
+const userStore = useUserStore()
 
 const form = reactive({
   username: 'admin',
@@ -73,7 +77,7 @@ const rules: FormInstance['rules'] = {
   username: [{ required: true, message: '请输入账号' }],
   password: [
     { required: true, message: '请输入密码' },
-    { match: /^\d{6}$/, message: '输入密码格式不正确' },
+    { match: /^\d{6,16}$/, message: '输入密码格式不正确' },
   ],
 }
 
@@ -81,10 +85,15 @@ const rules: FormInstance['rules'] = {
 const checked = ref(false)
 
 // 登录加载
-const { loading, setLoading } = useLoading()
+const { loading: btnLoading, setLoading } = useLoading()
 
-const handleLogin = () => {
-  Message.info('登录')
+const handleLogin = async ({ values, errors }: { values: Record<string, any>; errors: any }) => {
+  if (errors) return
+
+  setLoading(true)
+  const res = await userStore.login(values)
+  setLoading(false)
+  console.log('登录结果', res)
 }
 
 const handleForgotPassword = () => {

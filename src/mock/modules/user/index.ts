@@ -9,14 +9,14 @@ const mocks: MockMethod[] = [
     response: ({ body }: { body: any }) => {
       const accounts = [
         { username: 'admin', password: '123456' },
-        { username: 'guest', password: '123456' },
+        { username: 'user', password: '123456' },
       ]
 
       if (
         accounts.some((item) => item.username === body.username && item.password === body.password)
       ) {
         return JsonResp.success({
-          token: 'token123456',
+          token: body.username + '_token123456',
         })
       }
 
