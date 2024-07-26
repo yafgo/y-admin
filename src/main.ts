@@ -15,8 +15,8 @@ import store from './stores'
 const enableMock = async () => {
   if (import.meta.env.PROD && import.meta.env.VITE_ENABLE_MOCK) {
     await new Promise((resolve) => {
-      import('./mock/prod').then(({ setupProdMockServer }) => {
-        setupProdMockServer()
+      import('./mock/prod').then(async ({ setupProdMockServer }) => {
+        await setupProdMockServer()
         resolve(true)
       })
     })
@@ -26,12 +26,13 @@ const enableMock = async () => {
 const bootstrap = async () => {
   const app = createApp(App)
 
-  app.use(store)
-  app.use(router)
+  await enableMock()
+
   app.use(ArcoVue)
   app.use(ArcoVueIcon)
 
-  await enableMock()
+  app.use(store)
+  app.use(router)
 
   app.mount('#app')
 }
