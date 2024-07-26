@@ -21,9 +21,9 @@ const useUserStore = defineStore('user', {
 
   actions: {
     async login(params: any) {
-      const { code, data } = await apiLogin(params)
+      const { code, data, message } = await apiLogin(params)
       if (code !== RespCode.SUCCESS || !data.token) {
-        return false
+        throw new Error(message || '登录失败')
       }
       setToken(data.token)
       this.token = data.token

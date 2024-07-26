@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { Message, type FormInstance } from '@arco-design/web-vue'
+import { Message, type FormInstance, type ValidatedError } from '@arco-design/web-vue'
 import LoginBg from './components/LoginBg/index.vue'
 import { useLoading } from '@/hooks'
 import { useUserStore } from '@/stores'
@@ -87,13 +87,25 @@ const checked = ref(false)
 // 登录加载
 const { loading: btnLoading, setLoading } = useLoading()
 
-const handleLogin = async ({ values, errors }: { values: Record<string, any>; errors: any }) => {
-  if (errors) return
+const handleLogin = async ({
+  values,
+  errors,
+}: {
+  values: Record<string, any>
+  errors: Record<string, ValidatedError> | undefined
+}) => {
+  if (btnLoading.value || errors) return
 
   setLoading(true)
-  const res = await userStore.login(values)
-  setLoading(false)
-  console.log('登录结果', res)
+  try {
+    const res = await userStore.login(values)
+    console.log('登录结果', res)
+    Message.success('登录成功')
+  } catch (err) {
+    Message.error((err as Error)?.message)
+  } finally {
+    setLoading(false)
+  }
 }
 
 const handleForgotPassword = () => {
