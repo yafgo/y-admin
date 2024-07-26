@@ -70,10 +70,12 @@ import { useLoading } from '@/hooks'
 import { useUserStore } from '@/stores'
 import { useStorage } from '@vueuse/core'
 import { useStorageKey } from '@/utils/storage'
+import { ROUTE_NAME_HOME } from '@/consts'
 
 defineOptions({ name: 'PageLogin' })
 
 const userStore = useUserStore()
+const router = useRouter()
 
 // 登录加载
 const { loading: btnLoading, setLoading } = useLoading()
@@ -110,6 +112,13 @@ const handleLogin = async ({
   setLoading(true)
   try {
     await userStore.login(values)
+
+    // 路由跳转
+    const { redirect, ...otherQuery } = router.currentRoute.value.query
+    router.push({
+      name: (redirect as string) || ROUTE_NAME_HOME,
+      query: { ...otherQuery },
+    })
     Message.success('登录成功')
 
     // 记住账号
