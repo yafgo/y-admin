@@ -40,11 +40,13 @@
 <script setup lang="ts">
 import { Message, Modal } from '@arco-design/web-vue'
 import { useUserStore } from '@/stores'
+import { useUser } from '@/hooks'
 import avatarDefault from '@/assets/logo.svg'
 
 defineOptions({ name: 'HeaderRightUser' })
 
 const userStore = useUserStore()
+const { logout } = useUser()
 
 const avatar = computed(() => {
   return userStore.avatar || avatarDefault
@@ -55,21 +57,17 @@ const todo = () => {
 }
 
 const handleLogout = () => {
-  const confirm = Modal.confirm({
+  Modal.confirm({
     title: '提示',
     content: '确定要退出登录吗？',
-    onOk: () => {
+    /* onOk: () => {
       Message.success('退出成功')
-    },
-    onBeforeOk: () => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(true)
-        }, 1000)
-      })
+    }, */
+    onBeforeOk: async () => {
+      await logout()
+      return true
     },
   })
-  console.log(confirm)
 }
 </script>
 

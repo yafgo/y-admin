@@ -45,14 +45,14 @@ const useUserStore = defineStore('user', {
     },
 
     async logout() {
-      const res = await apiLogout()
-      /* if (code !== RespCode.SUCCESS) {
-        return false
-      } */
-      console.log('logout', res)
+      await apiLogout()
+      this.logoutCallback()
+      return true
+    },
+    logoutCallback() {
       clearToken()
       this.token = ''
-      return true
+      this.$reset()
     },
   },
 })
