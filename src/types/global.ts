@@ -3,3 +3,9 @@ export interface RespData<T = any> {
   data: T
   message: string
 }
+
+export interface UserInfo {
+  id: number
+  name: string
+  avatar: string
+}

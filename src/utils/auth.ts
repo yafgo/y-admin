@@ -1,4 +1,6 @@
-const TOKEN_KEY = 'token'
+import { useStorageKey } from './storage'
+
+const TOKEN_KEY = useStorageKey('token')
 
 const isLogin = () => {
   return !!localStorage.getItem(TOKEN_KEY)

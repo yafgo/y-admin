@@ -1,5 +1,6 @@
 import type { Router } from 'vue-router'
 import { handleRouteChange } from '@/utils/route-listener'
+import setupUserLoginInfoGuard from './userLoginInfo'
 
 function setupPageGuard(router: Router) {
   router.afterEach(async (to) => {
@@ -10,4 +11,5 @@ function setupPageGuard(router: Router) {
 
 export default function setupRouteGuard(router: Router) {
   setupPageGuard(router)
+  setupUserLoginInfoGuard(router)
 }

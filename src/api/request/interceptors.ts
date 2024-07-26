@@ -1,3 +1,4 @@
+import { getToken } from '@/utils/auth'
 import { type AxiosInstance } from 'axios'
 
 /**
@@ -8,7 +9,7 @@ const useDefaultInterceptor = (instance: AxiosInstance) => {
   // 请求拦截
   instance.interceptors.request.use(
     (config) => {
-      const token = 'token'
+      const token = getToken()
       if (token) {
         config.headers.Authorization = `Bearer ${token}`
       }

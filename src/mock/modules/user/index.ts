@@ -23,6 +23,25 @@ const mocks: MockMethod[] = [
       return JsonResp.error('账号或密码错误')
     },
   },
+  {
+    url: '/user/info',
+    method: 'get',
+    timeout: 500,
+    response: ({ headers }: { headers: any }) => {
+      const token = (headers.authorization || '').replace('Bearer ', '').trim()
+      const username = token.split('_')[0] || '[user]'
+      return JsonResp.success({
+        name: username,
+        avatar: `@image(100x100,#50B347,#fff,png,${username === 'admin' ? 'admin' : 'user'})`,
+      })
+    },
+  },
+  {
+    url: '/user/logout',
+    method: 'post',
+    timeout: 200,
+    response: JsonResp.success({}, '退出成功'),
+  },
 ]
 
 export default mocks

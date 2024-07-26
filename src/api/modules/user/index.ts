@@ -1,5 +1,6 @@
-import request from '../../request'
+import type { UserInfo } from '@/types/global'
 import type { ResLogin } from './type'
+import request from '../../request'
 
 /** 用户登录 */
 export const login = (data: { username: string; password: string }) => {
@@ -13,5 +14,5 @@ export const logout = () => {
 
 /** 获取用户信息 */
 export const getUserInfo = () => {
-  return request.get('/user/userInfo')
+  return request.get<UserInfo>('/user/info')
 }
