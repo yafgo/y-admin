@@ -115,7 +115,7 @@ const handleLogin = async ({
 
     // 路由跳转
     const { redirect, ...otherQuery } = router.currentRoute.value.query
-    router.push({
+    router.replace({
       name: (redirect as string) || ROUTE_NAME_HOME,
       query: { ...otherQuery },
     })
