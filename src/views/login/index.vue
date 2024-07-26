@@ -37,7 +37,12 @@
             </a-form-item>
             <a-form-item>
               <a-row justify="space-between" align="center" class="w-full">
-                <a-checkbox v-model="checked">记住密码</a-checkbox>
+                <a-checkbox
+                  :model-value="loginConfig.rememberPassword"
+                  @change="setRememberPassword as any"
+                >
+                  记住密码
+                </a-checkbox>
                 <a-link @click="handleForgotPassword">忘记密码</a-link>
               </a-row>
             </a-form-item>
@@ -63,14 +68,26 @@ import { Message, type FormInstance, type ValidatedError } from '@arco-design/we
 import LoginBg from './components/LoginBg/index.vue'
 import { useLoading } from '@/hooks'
 import { useUserStore } from '@/stores'
+import { useStorage } from '@vueuse/core'
+import { useStorageKey } from '@/utils/storage'
 
 defineOptions({ name: 'PageLogin' })
 
 const userStore = useUserStore()
 
-const form = reactive({
+// 登录加载
+const { loading: btnLoading, setLoading } = useLoading()
+
+const loginConfig = useStorage(useStorageKey('login-config'), {
+  /** 是否记住密码 */
+  rememberPassword: true,
   username: 'admin',
   password: '123456',
+})
+
+const form = reactive({
+  username: loginConfig.value.username,
+  password: loginConfig.value.password,
 })
 
 const rules: FormInstance['rules'] = {
@@ -80,12 +97,6 @@ const rules: FormInstance['rules'] = {
     { match: /^\d{6,16}$/, message: '输入密码格式不正确' },
   ],
 }
-
-// 记住密码
-const checked = ref(false)
-
-// 登录加载
-const { loading: btnLoading, setLoading } = useLoading()
 
 const handleLogin = async ({
   values,
@@ -98,9 +109,16 @@ const handleLogin = async ({
 
   setLoading(true)
   try {
-    const res = await userStore.login(values)
-    console.log('登录结果', res)
+    await userStore.login(values)
     Message.success('登录成功')
+
+    // 记住账号
+    const { rememberPassword } = loginConfig.value
+    const { username, password } = values
+    // 实际生产环境需要进行加密存储。
+    // The actual production environment requires encrypted storage.
+    loginConfig.value.username = rememberPassword ? username : ''
+    loginConfig.value.password = rememberPassword ? password : ''
   } catch (err) {
     Message.error((err as Error)?.message)
   } finally {
@@ -108,8 +126,12 @@ const handleLogin = async ({
   }
 }
 
+const setRememberPassword = (value: boolean) => {
+  loginConfig.value.rememberPassword = value
+}
+
 const handleForgotPassword = () => {
-  Message.info('重置密码')
+  Message.info('todo 重置密码')
 }
 </script>
 
