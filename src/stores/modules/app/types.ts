@@ -2,6 +2,8 @@ import type { RouteRecordNormalized } from 'vue-router'
 
 export interface AppState {
   theme: string
+  /** 布局: left-左侧菜单(默认), top-顶部菜单, mix-混合菜单 */
+  layout: 'left' | 'top' | 'mix'
   colorWeak: boolean
   navbar: boolean
   menu: boolean

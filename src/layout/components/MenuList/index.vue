@@ -7,7 +7,13 @@ import { useAppStore } from '@/stores'
 
 export default defineComponent({
   name: 'MenuList',
-  setup() {
+  props: {
+    mode: {
+      type: String, // "horizontal" | "vertical" | "pop" | "popButton"
+      default: 'vertical',
+    },
+  },
+  setup(props) {
     const appStore = useAppStore()
     const router = useRouter()
     const { menuTree } = useMenuTree()
@@ -113,7 +119,7 @@ export default defineComponent({
 
     return () => (
       <a-menu
-        mode="vertical"
+        mode={props.mode}
         auto-open={false}
         level-indent={16}
         v-model:collapsed={menuCollapsed.value}

@@ -15,10 +15,8 @@
 
     <!-- 下方内容区 -->
     <a-layout class="app-layout-content">
-      <template v-if="appStore.layout === 'left'">
-        <!-- 左侧栏 -->
-        <LayoutSider></LayoutSider>
-      </template>
+      <!-- 左侧栏 -->
+      <LayoutSider></LayoutSider>
 
       <!-- 右侧内容区 -->
       <LayoutContent></LayoutContent>
@@ -34,12 +32,12 @@ import LayoutSider from './components/LayoutSider/index.vue'
 import LayoutContent from './components/LayoutContent/index.vue'
 import { useAppStore } from '@/stores'
 
-defineOptions({ name: 'LayoutDefault' })
+defineOptions({ name: 'LayoutMix' })
 
 const appStore = useAppStore()
 
 onMounted(() => {
-  console.log('app-layout default')
+  console.log('app-layout mix')
 })
 </script>
 
@@ -82,6 +80,6 @@ onMounted(() => {
 
 <style scoped lang="less">
 /* .layout {
-    color: #dfa;
-  } */
+      color: #dfa;
+    } */
 </style>

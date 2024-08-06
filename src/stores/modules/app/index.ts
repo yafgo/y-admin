@@ -4,7 +4,7 @@ import type { AppState } from './types'
 
 const useAppStore = defineStore('app', {
   state: (): AppState => ({
-    ...defaultSettings,
+    ...(defaultSettings as AppState),
   }),
 
   getters: {},
