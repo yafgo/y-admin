@@ -9,7 +9,7 @@
     :hide-trigger="true"
   >
     <div class="menu-wrapper">
-      <MenuList></MenuList>
+      <MenuList :menus="props.menus"></MenuList>
     </div>
   </a-layout-sider>
 </template>
@@ -17,12 +17,22 @@
 <script setup lang="ts">
 import { useAppStore } from '@/stores'
 import MenuList from '../MenuList/index.vue'
+import type { RouteRecordNormalized } from 'vue-router'
 
 defineOptions({ name: 'LayoutSider' })
 
 /** 是否第一次执行 */
 const isInit = ref(true)
 const appStore = useAppStore()
+
+const props = withDefaults(
+  defineProps<{
+    menus: RouteRecordNormalized[]
+  }>(),
+  {
+    menus: () => [],
+  }
+)
 
 const collapsed = computed(() => appStore.menuCollapsed)
 const handleCollapse = (val: boolean) => {

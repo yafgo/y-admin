@@ -58,7 +58,7 @@ onMounted(() => {
 
 .layout-header {
   width: 100%;
-  height: 60px;
+  height: 59px;
   padding: 0 16px;
   display: flex;
   justify-content: space-between;

@@ -1,6 +1,6 @@
 <template>
   <LayoutMix v-if="appStore.layout === 'mix'"></LayoutMix>
-  <LayoutDefault></LayoutDefault>
+  <LayoutDefault v-else></LayoutDefault>
 </template>
 
 <script setup lang="ts">

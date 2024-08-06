@@ -1,7 +1,7 @@
 <script lang="tsx">
 import { compile } from 'vue'
-import type { RouteLocationNormalized, RouteRecordRaw } from 'vue-router'
-import useMenuTree from './use-menu-tree'
+import type { RouteLocationNormalized, RouteRecordNormalized, RouteRecordRaw } from 'vue-router'
+import useMenuTree from '@/router/app-menus'
 import { addRouteListener } from '@/utils/route-listener'
 import { useAppStore } from '@/stores'
 
@@ -12,11 +12,22 @@ export default defineComponent({
       type: String, // "horizontal" | "vertical" | "pop" | "popButton"
       default: 'vertical',
     },
+    menus: {
+      type: Array<RouteRecordNormalized>,
+      default: [],
+    },
   },
   setup(props) {
     const appStore = useAppStore()
     const router = useRouter()
     const { menuTree } = useMenuTree()
+
+    const menus = computed(() => {
+      if (props.menus.length) {
+        return props.menus
+      }
+      return menuTree.value
+    })
 
     /** 展开的菜单项key */
     const openKeys = ref<string[]>([])
@@ -44,7 +55,7 @@ export default defineComponent({
           })
         }
       }
-      menuTree.value.forEach((el: RouteRecordRaw) => {
+      menus.value.forEach((el: RouteRecordRaw) => {
         if (isFind) return // Performance optimization
         backtrack(el, [el.name as string])
       })
@@ -103,7 +114,7 @@ export default defineComponent({
 
         return nodes
       }
-      return travel(menuTree.value)
+      return travel(menus.value)
     }
 
     // 菜单折叠状态
@@ -111,6 +122,7 @@ export default defineComponent({
       get: () => (appStore.device === 'desktop' ? appStore.menuCollapsed : false),
       set: (val: boolean) => appStore.updateSettings({ menuCollapsed: val }),
     })
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const handleCollapse = (val: boolean) => {
       /* if (appStore.device === 'desktop') {
         appStore.updateSettings({ menuCollapsed: val })
