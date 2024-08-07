@@ -48,6 +48,13 @@ export default defineConfig(({ mode, command }) => {
         vue: 'vue/dist/vue.esm-bundler.js',
       },
     },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@import "@/assets/styles/vars.scss";`,
+        },
+      },
+    },
   }
 
   return mergeConfig(baseConfig, command === 'build' ? viteConfigProd : viteConfigDev)

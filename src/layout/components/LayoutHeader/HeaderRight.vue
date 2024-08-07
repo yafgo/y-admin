@@ -1,6 +1,15 @@
 <template>
   <a-row class="header-right">
     <a-space size="large">
+      <!-- 设置 -->
+      <a-tooltip content="设置">
+        <a-button size="mini" class="nav-btn" @click="settingDrawerRef?.open">
+          <template #icon>
+            <icon-settings :size="18" />
+          </template>
+        </a-button>
+      </a-tooltip>
+
       <!-- 搜索 -->
       <a-tooltip content="搜索">
         <a-button size="mini" class="nav-btn">
@@ -33,17 +42,21 @@
       <!-- 用户菜单 -->
       <HeaderRightUser></HeaderRightUser>
     </a-space>
+
+    <SettingDrawer ref="settingDrawerRef"></SettingDrawer>
   </a-row>
 </template>
 
 <script setup lang="ts">
 import { useDark, useToggle, useFullscreen } from '@vueuse/core'
 import HeaderRightUser from './components/HeaderRightUser.vue'
+import SettingDrawer from './components/SettingDrawer.vue'
 import { useAppStore } from '@/stores'
 
 defineOptions({ name: 'HeaderRight' })
 
 const appStore = useAppStore()
+const settingDrawerRef = ref<InstanceType<typeof SettingDrawer>>()
 
 // 主题
 const isDark = useDark({
