@@ -1,6 +1,10 @@
 <script lang="tsx">
+import router from '@/router'
+import { isExternal } from '@/utils/route'
+import { addRouteListener } from '@/utils/route-listener'
 import { compile } from 'vue'
-import type { RouteRecordNormalized } from 'vue-router'
+import type { RouteLocationNormalized, RouteRecordNormalized } from 'vue-router'
+import { searchTree } from 'xe-utils/array'
 
 export default defineComponent({
   name: 'MenuTop',
@@ -11,16 +15,42 @@ export default defineComponent({
     },
   },
   emits: {
+    /** 顶部菜单切换 */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    menuClick: (el: RouteRecordNormalized) => true,
+    menuChange: (el: RouteRecordNormalized) => true,
   },
   setup(props, { emit }) {
+    // 当前路由
+    const currRoute = ref<RouteRecordNormalized>()
     /** 选中的菜单项key */
     const selectedKeys = ref<string[]>([])
 
     const handleMenuItemClick = (el: RouteRecordNormalized) => {
-      emit('menuClick', el)
+      if (isExternal(el.path)) {
+        window.open(el.path)
+        return
+      }
+      router.push({ name: el.name })
     }
+
+    addRouteListener((to: RouteLocationNormalized) => {
+      // 查找to路由的所属的root路由
+      const arrMatch = searchTree(props.menus, (el) => el.name === to.name, {
+        children: 'children',
+      })
+      if (!arrMatch.length) {
+        // 没有找到, 正常不应该出现
+        return
+      }
+      const rootRoute = arrMatch[0]
+      if (currRoute.value && currRoute.value.name === rootRoute.name) {
+        // 顶部菜单没有改变
+        return
+      }
+      currRoute.value = rootRoute
+      selectedKeys.value = [rootRoute.name as string]
+      emit('menuChange', currRoute.value)
+    })
 
     // 渲染菜单项
     const renderMenu = () => {

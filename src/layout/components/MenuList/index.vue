@@ -62,6 +62,15 @@ export default defineComponent({
       return result
     }
 
+    const updateSelectedKeys = (name: string) => {
+      const menuOpenKeys = findMenuOpenKeys(name)
+
+      const keySet = new Set([...menuOpenKeys, ...openKeys.value])
+      openKeys.value = [...keySet]
+
+      selectedKeys.value = [menuOpenKeys[menuOpenKeys.length - 1]]
+    }
+
     // 监听路由变化
     addRouteListener((to: RouteLocationNormalized) => {
       const { activeMenu, hideInMenu } = to.meta
@@ -69,13 +78,14 @@ export default defineComponent({
         return
       }
 
-      const menuOpenKeys = findMenuOpenKeys((activeMenu || to.name) as string)
-
-      const keySet = new Set([...menuOpenKeys, ...openKeys.value])
-      openKeys.value = [...keySet]
-
-      selectedKeys.value = [activeMenu || menuOpenKeys[menuOpenKeys.length - 1]]
+      updateSelectedKeys(activeMenu || (to.name as string))
     }, true)
+
+    /** 菜单项变化时 */
+    watch(menus, () => {
+      const route = router.currentRoute.value
+      updateSelectedKeys(route.name as string)
+    })
 
     // 渲染菜单项
     const renderMenu = () => {

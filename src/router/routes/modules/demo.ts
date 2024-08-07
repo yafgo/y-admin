@@ -1,6 +1,13 @@
 import { LayoutDefault } from '../base'
 import type { AppRouteRecordRaw } from '../types'
 
+/**
+ * 注意: 由于 LayoutMix 菜单高亮实现的逻辑, 所有有子路由的父级路由请务必设置 redirect 到第一个子路由
+ */
+
+/**
+ * 示例路由
+ */
 const DEMO: AppRouteRecordRaw[] = [
   {
     path: '/demo',
@@ -28,6 +35,7 @@ const DEMO: AppRouteRecordRaw[] = [
     path: '/about',
     name: 'aboutGroup',
     component: LayoutDefault,
+    redirect: '/about/index',
     meta: {
       order: 2,
       locale: '关于',
@@ -35,7 +43,7 @@ const DEMO: AppRouteRecordRaw[] = [
     },
     children: [
       {
-        path: '',
+        path: 'index',
         name: 'about',
         component: () => import('@/views/AboutView.vue'),
         meta: {
@@ -52,7 +60,7 @@ for (let i = 0; i < 6; i++) {
     path: `/demo${i}`,
     name: `demoGroup${i}`,
     component: LayoutDefault,
-    redirect: `/demo${i}/index`,
+    redirect: `/demo${i}/index0`,
     meta: {
       order: 3 + i,
       locale: `示例${i + 1}`,

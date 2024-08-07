@@ -35,6 +35,9 @@ importers:
       vue-router:
         specifier: ^4.3.3
         version: 4.4.0(vue@3.4.31(typescript@5.4.5))
+      xe-utils:
+        specifier: ^3.5.29
+        version: 3.5.29
     devDependencies:
       '@arco-design/web-vue':
         specifier: ^2.55.3
@@ -2493,6 +2496,9 @@ packages:
         optional: true
       utf-8-validate:
         optional: true
+
+  xe-utils@3.5.29:
+    resolution: {integrity: sha512-9Ty3k/nHUptUzBZ/S+Z6umfpNWKU6ZFdGR2qHeynKRTjI/Tjd5ku/n6O1oKQCwtxQ3QzCl3NnD2LRy9SCTmnNw==}
 
   xml-name-validator@4.0.0:
     resolution: {integrity: sha512-ICP2e+jsHvAj2E2lIHxa5tjXRlKDJo4IdvPvCXbXQGdzSfmSpNVyIKMvoZHjDY9DP0zV17iI85o90vRFXNccRw==}
@@ -4977,6 +4983,8 @@ snapshots:
   wrappy@1.0.2: {}
 
   ws@8.18.0: {}
+
+  xe-utils@3.5.29: {}
 
   xml-name-validator@4.0.0: {}
 

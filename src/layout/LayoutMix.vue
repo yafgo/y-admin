@@ -5,7 +5,7 @@
       <HeaderLeft></HeaderLeft>
 
       <div class="header-center">
-        <MenuTop :menus="topMenus" @menuClick="handleTopMenuClick"></MenuTop>
+        <MenuTop :menus="topMenus" @menuChange="handleTopMenuChange"></MenuTop>
       </div>
 
       <HeaderRight></HeaderRight>
@@ -43,34 +43,20 @@ const topMenus = computed(() => menuTree.value)
 // 左侧菜单
 const leftMenus = ref<RouteRecordNormalized[]>([])
 
-const handleTopMenuClick = (el: RouteRecordNormalized) => {
-  console.log('el', el)
-  if (isExternal(el.path)) {
-    window.open(el.path)
-    return
-  }
+const handleTopMenuChange = (el: RouteRecordNormalized) => {
   refreshLeftMenus(el)
-
-  console.log('leftMenus', leftMenus.value)
 }
 
 /**
  * 刷新左侧菜单
  */
 const refreshLeftMenus = (el: RouteRecordNormalized) => {
-  console.log('左侧菜单', el.name)
   const menu = menuTree.value.find((item: RouteRecordNormalized) => item.name === el.name)
   if (!menu || !menu.children) {
     leftMenus.value = []
     return
   }
   leftMenus.value = menu.children
-}
-
-/** 判断 path 是否为外链 */
-const isExternal = (path: string) => {
-  const reg = /^(https?:|mailto:|tel:)/
-  return reg.test(path)
 }
 
 onMounted(() => {
