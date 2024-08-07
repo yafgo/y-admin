@@ -27,7 +27,7 @@ const appStore = useAppStore()
 
 const props = withDefaults(
   defineProps<{
-    menus: RouteRecordNormalized[]
+    menus?: RouteRecordNormalized[]
   }>(),
   {
     menus: () => [],
