@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import defaultSettings from '@/config/app.json'
 import type { AppState } from './types'
+import { useStorageKey } from '@/utils/storage'
 
 const useAppStore = defineStore('app', {
   state: (): AppState => ({
@@ -18,6 +19,11 @@ const useAppStore = defineStore('app', {
     toggleTheme(isDark: boolean) {
       this.theme = isDark ? 'dark' : 'light'
     },
+  },
+
+  persist: {
+    key: useStorageKey('app'),
+    storage: localStorage,
   },
 })
 
