@@ -4,13 +4,17 @@
       <slot></slot>
     </div>
 
-    <LayoutFooter></LayoutFooter>
+    <LayoutFooter v-if="appStore.footer"></LayoutFooter>
   </main>
 </template>
 
 <script setup lang="ts">
+import { useAppStore } from '@/stores'
 import LayoutFooter from '../LayoutFooter/index.vue'
+
 defineOptions({ name: 'PageContainer' })
+
+const appStore = useAppStore()
 </script>
 
 <style lang="scss" scoped>

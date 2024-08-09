@@ -2,7 +2,7 @@
   <a-drawer
     v-model:visible="visible"
     title="全局配置"
-    width="300px"
+    width="320px"
     unmount-on-close
     :footer="false"
   >
@@ -36,6 +36,10 @@
 
         <a-descriptions-item label="深色菜单">
           <a-switch v-model="appStore.menuDark" />
+        </a-descriptions-item>
+
+        <a-descriptions-item label="显示页脚">
+          <a-switch v-model="appStore.footer" />
         </a-descriptions-item>
       </a-descriptions>
     </a-space>
