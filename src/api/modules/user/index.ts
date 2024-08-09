@@ -1,4 +1,3 @@
-import type { UserInfo } from '@/types/global'
 import type { ResLogin } from './type'
 import request from '../../request'
 

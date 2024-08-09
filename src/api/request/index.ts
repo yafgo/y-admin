@@ -1,6 +1,5 @@
 import axios, { type AxiosRequestConfig } from 'axios'
 import { useDefaultInterceptor } from './interceptors'
-import type { RespData } from '@/types/global'
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -13,12 +12,12 @@ useDefaultInterceptor(instance)
 export const request = instance
 
 class myRequest {
-  static async request<T>(config: AxiosRequestConfig): Promise<RespData<T>> {
+  static async request<T>(config: AxiosRequestConfig): Promise<ApiResp<T>> {
     try {
-      const res = await instance.request<RespData<T>>(config)
+      const res = await instance.request<ApiResp<T>>(config)
       return res.data
     } catch (e: any) {
-      return { code: 1, message: e.message || '', data: null } as RespData<T>
+      return { code: 1, message: e.message || '', data: null } as ApiResp<T>
     }
   }
 
