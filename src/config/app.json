@@ -4,7 +4,6 @@
   "colorWeak": false,
   "navbar": true,
   "menu": true,
-  "topMenu": false,
   "hideMenu": false,
   "menuCollapsed": false,
   "footer": true,
@@ -13,6 +12,7 @@
   "globalSettings": false,
   "device": "desktop",
   "tabBar": false,
+  "tabBarMode": "card",
   "menuFromServer": false,
   "serverMenu": []
 }

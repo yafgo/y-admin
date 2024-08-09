@@ -59,6 +59,7 @@ onMounted(() => {
     height: 100%;
     background-color: var(--color-border);
     content: '';
+    z-index: 1;
   }
 
   > :deep(.arco-layout-sider-children) {
