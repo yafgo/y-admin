@@ -9,7 +9,7 @@
     :hide-trigger="true"
   >
     <div class="menu-wrapper">
-      <MenuList :menus="props.menus"></MenuList>
+      <MenuList :menus="props.menus" :theme="menuTheme"></MenuList>
     </div>
   </a-layout-sider>
 </template>
@@ -33,6 +33,8 @@ const props = withDefaults(
     menus: () => [],
   }
 )
+
+const menuTheme = computed(() => (appStore.menuDark ? 'dark' : 'light'))
 
 const collapsed = computed(() => appStore.menuCollapsed)
 const handleCollapse = (val: boolean) => {

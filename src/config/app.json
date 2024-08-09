@@ -4,6 +4,7 @@
   "colorWeak": false,
   "navbar": true,
   "menu": true,
+  "menuDark": false,
   "hideMenu": false,
   "menuCollapsed": false,
   "footer": true,

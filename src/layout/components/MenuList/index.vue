@@ -16,6 +16,10 @@ export default defineComponent({
       type: Array<RouteRecordNormalized>,
       default: [],
     },
+    theme: {
+      type: String,
+      default: 'light',
+    },
   },
   setup(props) {
     const appStore = useAppStore()
@@ -142,6 +146,7 @@ export default defineComponent({
     return () => (
       <a-menu
         mode={props.mode}
+        theme={props.theme}
         auto-open={false}
         level-indent={16}
         v-model:collapsed={menuCollapsed.value}

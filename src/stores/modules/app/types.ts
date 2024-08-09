@@ -21,6 +21,9 @@ export interface AppState {
 
   /** 左侧菜单栏宽度 */
   menuWidth: number
+  /** 深色菜单 */
+  menuDark: boolean
+
   globalSettings: boolean
   device: string
 

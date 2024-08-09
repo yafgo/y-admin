@@ -33,6 +33,10 @@
           >
           </a-select>
         </a-descriptions-item>
+
+        <a-descriptions-item label="深色菜单">
+          <a-switch v-model="appStore.menuDark" />
+        </a-descriptions-item>
       </a-descriptions>
     </a-space>
   </a-drawer>
