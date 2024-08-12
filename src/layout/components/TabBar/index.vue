@@ -1,22 +1,64 @@
 <template>
   <div class="tab-bar">
-    <a-tabs :type="tabsType" hide-content>
-      <a-tab-pane :title="`tab-${i}`" v-for="i in 20" :key="i"></a-tab-pane>
-      <template #extra>
+    <a-tabs
+      :type="tabsType"
+      hide-content
+      editable
+      :active-key="route.path"
+      @tab-click="(key) => handleTabClick(key as string)"
+      @delete="(key) => handleTabDelete(key as string)"
+    >
+      <a-tab-pane
+        v-for="item in tabBarStore.tabList"
+        :title="item.title"
+        :key="item.path"
+        :closable="true"
+      ></a-tab-pane>
+      <!-- <template #extra>
         <div>右侧扩展</div>
-      </template>
+      </template> -->
     </a-tabs>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useAppStore } from '@/stores'
+import { useAppStore, useTabBarStore } from '@/stores'
+import type { TabItem } from '@/stores/modules/tabbar/types'
+import { addRouteListener } from '@/utils/route-listener'
 
 defineOptions({ name: 'TabBar' })
 
+const route = useRoute()
+const router = useRouter()
 const appStore = useAppStore()
+const tabBarStore = useTabBarStore()
 
 const tabsType = computed(() => appStore.tabBarMode || 'card')
+
+addRouteListener((routeItem) => {
+  // console.log('listen', routeItem)
+  if (routeItem.meta.hideInMenu) {
+    return
+  }
+  const item: TabItem = {
+    title: routeItem.meta?.locale || '',
+    name: '',
+    path: routeItem.path,
+    query: routeItem.query,
+  }
+  tabBarStore.addTabItem(item)
+})
+
+const handleTabClick = (key: string) => {
+  if (key === route.path) {
+    return
+  }
+  router.push({ path: key })
+}
+
+const handleTabDelete = (key: string) => {
+  tabBarStore.removeTabItem(key)
+}
 </script>
 
 <style lang="scss" scoped>
