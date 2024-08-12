@@ -41,7 +41,7 @@ addRouteListener((routeItem) => {
     return
   }
   const item: TabItem = {
-    title: routeItem.meta?.locale || '',
+    title: routeItem.meta?.locale || (routeItem.name as string) || '[未命名]',
     name: '',
     path: routeItem.path,
     query: routeItem.query,
