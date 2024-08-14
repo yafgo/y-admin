@@ -3,24 +3,40 @@ import defaultSettings from '@/config/app.json'
 import type { AppState } from './types'
 import { useStorageKey } from '@/utils/storage'
 
-const useAppStore = defineStore('app', {
-  state: (): AppState => ({
-    ...(defaultSettings as AppState),
-  }),
+const storeSetup = () => {
+  /** app配置 */
+  const appConfig = reactive({ ...defaultSettings }) as AppState
 
-  getters: {},
+  const updateSettings = (partial: Partial<AppState>) => {
+    // @ts-ignore-next-line
+    Object.assign(appConfig, partial)
+  }
 
-  actions: {
-    updateSettings(partial: Partial<AppState>) {
-      // @ts-ignore-next-line
-      this.$patch(partial)
-    },
+  const toggleTheme = (isDark: boolean) => {
+    appConfig.theme = isDark ? 'dark' : 'light'
+  }
 
-    toggleTheme(isDark: boolean) {
-      this.theme = isDark ? 'dark' : 'light'
-    },
-  },
+  /** 页面是否正在刷新 */
+  const reloadPageFlag = ref(true)
+  /** 刷新页面 */
+  const reloadPage = () => {
+    reloadPageFlag.value = false
+    nextTick(() => {
+      reloadPageFlag.value = true
+    })
+  }
 
+  return {
+    ...toRefs(appConfig),
+    updateSettings,
+    toggleTheme,
+
+    reloadPageFlag,
+    reloadPage,
+  }
+}
+
+const useAppStore = defineStore('app', storeSetup, {
   persist: {
     key: useStorageKey('app'),
     storage: localStorage,

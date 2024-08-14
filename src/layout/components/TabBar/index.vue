@@ -88,7 +88,8 @@ const handleTabDelete = (key: string) => {
 }
 
 const handleReload = () => {
-  console.log('重新加载')
+  console.log('刷新页面')
+  appStore.reloadPage()
 }
 
 enum EAction {

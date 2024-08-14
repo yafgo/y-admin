@@ -4,9 +4,9 @@
 
     <a-layout-content>
       <router-view v-slot="{ Component, route }">
-        <transition>
+        <transition name="fade">
           <keep-alive :include="tabBarStore.getCacheList">
-            <component :is="Component" :key="route.path"></component>
+            <component :is="Component" :key="route.path" v-if="appStore.reloadPageFlag"></component>
           </keep-alive>
         </transition>
       </router-view>
@@ -43,4 +43,6 @@ const tabBarStore = useTabBarStore()
     box-sizing: border-box;
   }
 }
+
+@import '../../../assets/styles/css/transition.css';
 </style>
