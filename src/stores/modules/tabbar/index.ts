@@ -5,12 +5,25 @@ import router from '@/router'
 const useTabBarStore = defineStore('tabBar', {
   state: (): TabBarState => ({
     tabList: [],
-    cacheList: [],
+    cacheList: new Set([]),
   }),
 
-  getters: {},
+  getters: {
+    getCacheList(): string[] {
+      return Array.from(this.cacheList)
+    },
+  },
 
   actions: {
+    cacheAdd(name: string) {
+      if (typeof name === 'string' && name !== '') {
+        this.cacheList.add(name)
+      }
+    },
+    cacheRemove(name: string) {
+      this.cacheList.delete(name)
+    },
+
     /** 清空页签 */
     clearTabList() {
       const arr: ITabItem[] = []
@@ -64,6 +77,11 @@ const useTabBarStore = defineStore('tabBar', {
     closeAll() {
       this.clearTabList()
       router.push('/')
+    },
+
+    resetTabList() {
+      this.tabList = []
+      this.cacheList.clear()
     },
   },
 

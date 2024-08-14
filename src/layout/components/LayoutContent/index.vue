@@ -3,9 +3,11 @@
     <TabBar v-if="appStore.tabBar"></TabBar>
 
     <a-layout-content>
-      <router-view v-slot="{ Component }">
+      <router-view v-slot="{ Component, route }">
         <transition>
-          <component :is="Component"></component>
+          <keep-alive :include="tabBarStore.getCacheList">
+            <component :is="Component" :key="route.path"></component>
+          </keep-alive>
         </transition>
       </router-view>
     </a-layout-content>
@@ -18,11 +20,12 @@
 
 <script setup lang="ts">
 import TabBar from '../TabBar/index.vue'
-import { useAppStore } from '@/stores'
+import { useAppStore, useTabBarStore } from '@/stores'
 
 defineOptions({ name: 'LayoutContent' })
 
 const appStore = useAppStore()
+const tabBarStore = useTabBarStore()
 </script>
 
 <style lang="scss" scoped>
