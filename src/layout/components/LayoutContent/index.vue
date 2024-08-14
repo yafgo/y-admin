@@ -1,8 +1,8 @@
 <template>
-  <a-layout class="layout-content" id="layout-content">
+  <a-layout class="layout-content">
     <TabBar v-if="appStore.tabBar"></TabBar>
 
-    <a-layout-content>
+    <a-layout-content id="layout-content">
       <router-view v-slot="{ Component, route }">
         <transition name="fade">
           <keep-alive :include="tabBarStore.getCacheList">
