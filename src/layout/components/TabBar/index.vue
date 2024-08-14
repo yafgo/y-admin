@@ -14,9 +14,9 @@
         :key="item.path"
         :closable="true"
       >
-        <template #title>
+        <!-- <template #title>
           <TabItem>{{ item.title }}</TabItem>
-        </template>
+        </template> -->
       </a-tab-pane>
       <template #extra>
         <a-space size="medium">
@@ -50,7 +50,7 @@
 <script setup lang="ts">
 import { useAppStore, useTabBarStore } from '@/stores'
 import type { ITabItem } from '@/stores/modules/tabbar/types'
-import TabItem from './tab-item.vue'
+// import TabItem from './tab-item.vue'
 import { addRouteListener } from '@/utils/route-listener'
 
 defineOptions({ name: 'TabBar' })
@@ -69,11 +69,14 @@ addRouteListener((routeItem) => {
   }
   const item: ITabItem = {
     title: routeItem.meta?.locale || (routeItem.name as string) || '[未命名]',
-    name: '',
+    name: routeItem.name as string,
     path: routeItem.path,
     query: routeItem.query,
   }
   tabBarStore.addTabItem(item)
+  if (!routeItem.meta.ignoreCache) {
+    tabBarStore.cacheAdd(item.name)
+  }
 })
 
 const handleTabClick = (key: string) => {

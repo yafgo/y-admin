@@ -31,8 +31,8 @@ const bootstrap = async () => {
   app.use(ArcoVue)
   app.use(ArcoVueIcon)
 
-  app.use(store)
   app.use(router)
+  app.use(store)
 
   app.mount('#app')
 }

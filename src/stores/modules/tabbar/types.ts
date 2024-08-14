@@ -1,3 +1,5 @@
+import type { RouteRecordName } from 'vue-router'
+
 export interface ITabItem {
   title: string
   name: string
@@ -10,5 +12,5 @@ export interface TabBarState {
   tabList: ITabItem[]
 
   /** keep-alive缓存的数组 */
-  cacheList: Set<string>
+  cacheList: RouteRecordName[]
 }

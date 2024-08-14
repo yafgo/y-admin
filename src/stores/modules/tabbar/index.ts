@@ -5,23 +5,29 @@ import router from '@/router'
 const useTabBarStore = defineStore('tabBar', {
   state: (): TabBarState => ({
     tabList: [],
-    cacheList: new Set([]),
+    cacheList: [],
   }),
 
   getters: {
     getCacheList(): string[] {
-      return Array.from(this.cacheList)
+      return [...this.cacheList] as string[]
     },
   },
 
   actions: {
     cacheAdd(name: string) {
       if (typeof name === 'string' && name !== '') {
-        this.cacheList.add(name)
+        if (this.cacheList.includes(name)) {
+          return
+        }
+        this.cacheList.push(name)
       }
     },
     cacheRemove(name: string) {
-      this.cacheList.delete(name)
+      const index = this.cacheList.indexOf(name)
+      if (index !== -1) {
+        this.cacheList.splice(index, 1)
+      }
     },
 
     /** 清空页签 */
@@ -65,11 +71,12 @@ const useTabBarStore = defineStore('tabBar', {
 
     /** 移除其他页签 */
     closeOthers(currPath: string) {
-      this.tabList.forEach((item) => {
-        if (item.path === currPath) {
-          return
-        }
+      const arr = this.tabList.filter((item) => item.path !== currPath)
+      arr.forEach((item) => {
         this.removeTabItem(item)
+        if (item.name) {
+          this.cacheRemove(item.name)
+        }
       })
     },
 
@@ -81,7 +88,7 @@ const useTabBarStore = defineStore('tabBar', {
 
     resetTabList() {
       this.tabList = []
-      this.cacheList.clear()
+      this.cacheList = []
     },
   },
 
