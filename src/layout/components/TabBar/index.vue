@@ -13,17 +13,40 @@
         :title="item.title"
         :key="item.path"
         :closable="true"
-      ></a-tab-pane>
-      <!-- <template #extra>
-        <div>右侧扩展</div>
-      </template> -->
+      >
+        <template #title>
+          <TabItem>{{ item.title }}</TabItem>
+        </template>
+      </a-tab-pane>
+      <template #extra>
+        <a-space size="medium">
+          <a-dropdown trigger="hover">
+            <span>操作</span>
+            <template #content>
+              <a-doption>
+                <template #icon><icon-close /></template>
+                <template #default>关闭当前</template>
+              </a-doption>
+              <a-doption>
+                <template #icon><icon-eraser /></template>
+                <template #default>关闭其他</template>
+              </a-doption>
+              <a-doption>
+                <template #icon><icon-folder-delete /></template>
+                <template #default>关闭全部</template>
+              </a-doption>
+            </template>
+          </a-dropdown>
+        </a-space>
+      </template>
     </a-tabs>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useAppStore, useTabBarStore } from '@/stores'
-import type { TabItem } from '@/stores/modules/tabbar/types'
+import type { ITabItem } from '@/stores/modules/tabbar/types'
+import TabItem from './tab-item.vue'
 import { addRouteListener } from '@/utils/route-listener'
 
 defineOptions({ name: 'TabBar' })
@@ -40,7 +63,7 @@ addRouteListener((routeItem) => {
   if (routeItem.meta.hideInMenu) {
     return
   }
-  const item: TabItem = {
+  const item: ITabItem = {
     title: routeItem.meta?.locale || (routeItem.name as string) || '[未命名]',
     name: '',
     path: routeItem.path,

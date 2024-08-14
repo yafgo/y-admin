@@ -1,6 +1,6 @@
 import type { RouteRecordRaw } from 'vue-router'
 
-export interface TabItem {
+export interface ITabItem {
   title: string
   name: string
   path: string
@@ -9,7 +9,7 @@ export interface TabItem {
 
 export interface TabBarState {
   /** 页签数组 */
-  tabList: TabItem[]
+  tabList: ITabItem[]
 
   /** keep-alive缓存的数组 */
   cacheList: RouteRecordRaw[]

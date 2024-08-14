@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { TabBarState, TabItem } from './types'
+import type { TabBarState, ITabItem } from './types'
 import router from '@/router'
 
 const useTabBarStore = defineStore('tabBar', {
@@ -12,7 +12,7 @@ const useTabBarStore = defineStore('tabBar', {
 
   actions: {
     /** 添加页签 */
-    addTabItem(item: TabItem) {
+    addTabItem(item: ITabItem) {
       // 已存在不重复添加
       if (this.tabList.some((v) => v.path === item.path)) {
         return
@@ -22,7 +22,7 @@ const useTabBarStore = defineStore('tabBar', {
     },
 
     /** 移除页签 */
-    removeTabItem(itemOrKey: TabItem | string) {
+    removeTabItem(itemOrKey: ITabItem | string) {
       let key = ''
       if (typeof itemOrKey === 'string') {
         key = itemOrKey
