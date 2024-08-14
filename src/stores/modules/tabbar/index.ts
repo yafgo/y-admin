@@ -11,6 +11,12 @@ const useTabBarStore = defineStore('tabBar', {
   getters: {},
 
   actions: {
+    /** 清空页签 */
+    clearTabList() {
+      const arr: ITabItem[] = []
+      this.tabList = arr
+    },
+
     /** 添加页签 */
     addTabItem(item: ITabItem) {
       // 已存在不重复添加
@@ -37,6 +43,27 @@ const useTabBarStore = defineStore('tabBar', {
           router.push(this.tabList[index - 1]?.path || '/')
         }
       }
+    },
+
+    /** 移除其他页签 */
+    closeOne(tabPath: string) {
+      this.removeTabItem(tabPath)
+    },
+
+    /** 移除其他页签 */
+    closeOthers(currPath: string) {
+      this.tabList.forEach((item) => {
+        if (item.path === currPath) {
+          return
+        }
+        this.removeTabItem(item)
+      })
+    },
+
+    /** 关闭全部页签 */
+    closeAll() {
+      this.clearTabList()
+      router.push('/')
     },
   },
 

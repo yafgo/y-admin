@@ -20,18 +20,22 @@
       </a-tab-pane>
       <template #extra>
         <a-space size="medium">
-          <a-dropdown trigger="hover">
-            <span>操作</span>
+          <!-- 刷新当前页 -->
+          <icon-refresh class="icon-btn-reload" :size="18" @click="handleReload" />
+
+          <!-- 更多页签操作 -->
+          <a-dropdown trigger="hover" @select="handleDropdownSelect">
+            <icon-apps class="icon-btn-actions" :size="18" />
             <template #content>
-              <a-doption>
+              <a-doption :value="EAction.current">
                 <template #icon><icon-close /></template>
                 <template #default>关闭当前</template>
               </a-doption>
-              <a-doption>
+              <a-doption :value="EAction.others">
                 <template #icon><icon-eraser /></template>
                 <template #default>关闭其他</template>
               </a-doption>
-              <a-doption>
+              <a-doption :value="EAction.all">
                 <template #icon><icon-folder-delete /></template>
                 <template #default>关闭全部</template>
               </a-doption>
@@ -82,6 +86,31 @@ const handleTabClick = (key: string) => {
 const handleTabDelete = (key: string) => {
   tabBarStore.removeTabItem(key)
 }
+
+const handleReload = () => {
+  console.log('重新加载')
+}
+
+enum EAction {
+  current = 'current',
+  others = 'others',
+  all = 'all',
+}
+const handleDropdownSelect = (key: any) => {
+  switch (key) {
+    case EAction.current:
+      tabBarStore.closeOne(route.path)
+      break
+    case EAction.others:
+      tabBarStore.closeOthers(route.path)
+      break
+    case EAction.all:
+      tabBarStore.closeAll()
+      break
+    default:
+      break
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -95,5 +124,14 @@ const handleTabDelete = (key: string) => {
       z-index: 1;
     }
   }
+}
+
+.icon-btn-actions {
+  margin-right: 12px;
+  cursor: pointer;
+}
+
+.icon-btn-reload {
+  cursor: pointer;
 }
 </style>
